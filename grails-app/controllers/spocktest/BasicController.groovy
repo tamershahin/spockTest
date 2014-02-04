@@ -12,8 +12,7 @@ public class BasicController {
         if (Environment.current == Environment.DEVELOPMENT) {
             log.debug 'Exception:: ', e
         }
-        render view: '/someErrorPage'
+        render 'got problems'  //in the real app i render a json
     }
-
 
 }

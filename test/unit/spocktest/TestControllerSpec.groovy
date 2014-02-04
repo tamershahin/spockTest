@@ -4,6 +4,8 @@ import grails.test.mixin.TestFor
 import grails.test.mixin.TestMixin
 import grails.test.mixin.support.GrailsUnitTestMixin
 import spock.lang.Specification
+import spock.lang.Unroll
+
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
@@ -17,25 +19,18 @@ class TestControllerSpec extends Specification {
     def cleanup() {
     }
 
-    void "test with "() {
-
-        when: 'the indexObj action throws an exception'
-        params.id = 1
-        controller.indexObj()
-
-        then: "expect that the exception handler was invoked"
-        view == '/someErrorPage'
-
-    }
-
+    @Unroll
     void "test without "() {
 
         when: 'the index action throws an exception'
+        params.id = id
         controller.index()
 
         then: "expect that the exception handler was invoked"
-        view == '/someErrorPage'
+        response.text == 'got problems'
 
+        where:
+        id << [-1, 0, null]
     }
 
 }

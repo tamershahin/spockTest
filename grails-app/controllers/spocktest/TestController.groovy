@@ -1,21 +1,25 @@
 package spocktest
 
-class TestController extends BasicController{
+class TestController extends BasicController {
 
-    def index() {
-        throw new Exception('dummy')
+    def index(IndexCommand command) {
+        if (!command.validate()) {
+            throw new Exception('dummy')
+        }
+
+        render 'well done!'
     }
 
-    def indexObj(IndexCommand command) {
-        throw new Exception('dummy')
+    def afterInterceptor = {
+        log.debug 'do something'
     }
 
 }
 
 class IndexCommand {
-    String id
+    Integer id
 
     static constraints = {
-        id nullable: false
+        id nullable: false, min: 1
     }
 }

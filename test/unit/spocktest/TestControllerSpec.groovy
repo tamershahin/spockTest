@@ -19,25 +19,22 @@ class TestControllerSpec extends Specification {
 
     void "test with "() {
 
-        when: 'pass to the action a mocked commandObject'
-        def commandMock = mockCommandObject(IndexCommand)
-        commandMock.id = 1
-        controller.indexObj(commandMock)
+        when: 'the indexObj action throws an exception'
+        params.id = 1
+        controller.indexObj()
 
-        then: "expected a DmgUiException"
-        Exception ex = thrown()
-        assert ex
+        then: "expect that the exception handler was invoked"
+        view == '/someErrorPage'
 
     }
 
     void "test without "() {
 
-        when: 'call the action'
+        when: 'the index action throws an exception'
         controller.index()
 
-        then: "expected a DmgUiException"
-        Exception ex = thrown() //test will fail with this message: Expected exception java.lang.Exception, but no exception was thrown
-        assert ex
+        then: "expect that the exception handler was invoked"
+        view == '/someErrorPage'
 
     }
 
